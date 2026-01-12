@@ -30,7 +30,7 @@ class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         backgroundColor: Colors.transparent,
-        foregroundColor: colorScheme.onBackground,
+        foregroundColor: colorScheme.onSurface,
         elevation: 0,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(

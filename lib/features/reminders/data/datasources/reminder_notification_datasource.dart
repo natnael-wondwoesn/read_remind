@@ -25,6 +25,9 @@ class ReminderNotificationDataSourceImpl
   @override
   Future<void> scheduleReminder(ReminderModel reminder) async {
     final scheduledDate = tz.TZDateTime.from(reminder.scheduledAt, tz.local);
+    if (scheduledDate.isBefore(tz.TZDateTime.now(tz.local))) {
+      throw NotificationException('Scheduled time must be in the future');
+    }
 
     final details = NotificationDetails(
       android: AndroidNotificationDetails(
@@ -37,7 +40,7 @@ class ReminderNotificationDataSourceImpl
       iOS: const DarwinNotificationDetails(),
     );
 
-    final result = await notificationsPlugin.zonedSchedule(
+    await notificationsPlugin.zonedSchedule(
       reminder.id.hashCode,
       reminder.title,
       reminder.description ?? 'Tap to view reminder',
@@ -49,9 +52,5 @@ class ReminderNotificationDataSourceImpl
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
-
-    if (result == null) {
-      throw NotificationException('Unable to schedule notification');
-    }
   }
 }

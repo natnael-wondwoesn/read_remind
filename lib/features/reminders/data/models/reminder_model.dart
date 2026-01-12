@@ -35,6 +35,7 @@ class ReminderModel extends Reminder {
     };
   }
 
+  @override
   ReminderModel copyWith({
     String? id,
     String? title,
