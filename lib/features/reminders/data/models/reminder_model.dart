@@ -9,6 +9,7 @@ class ReminderModel extends Reminder {
     super.isCompleted,
     super.sendEmail,
     super.email,
+    super.repeatInterval,
   });
 
   factory ReminderModel.fromMap(Map<dynamic, dynamic> map) {
@@ -20,6 +21,8 @@ class ReminderModel extends Reminder {
       isCompleted: map['isCompleted'] as bool? ?? false,
       sendEmail: map['sendEmail'] as bool? ?? false,
       email: map['email'] as String?,
+      repeatInterval:
+          _repeatFromString(map['repeatInterval'] as String?) ?? RepeatInterval.none,
     );
   }
 
@@ -32,6 +35,7 @@ class ReminderModel extends Reminder {
       'isCompleted': isCompleted,
       'sendEmail': sendEmail,
       'email': email,
+      'repeatInterval': repeatInterval.name,
     };
   }
 
@@ -44,6 +48,7 @@ class ReminderModel extends Reminder {
     bool? isCompleted,
     bool? sendEmail,
     String? email,
+    RepeatInterval? repeatInterval,
   }) {
     return ReminderModel(
       id: id ?? this.id,
@@ -53,6 +58,7 @@ class ReminderModel extends Reminder {
       isCompleted: isCompleted ?? this.isCompleted,
       sendEmail: sendEmail ?? this.sendEmail,
       email: email ?? this.email,
+      repeatInterval: repeatInterval ?? this.repeatInterval,
     );
   }
 
@@ -65,6 +71,13 @@ class ReminderModel extends Reminder {
       isCompleted: reminder.isCompleted,
       sendEmail: reminder.sendEmail,
       email: reminder.email,
+      repeatInterval: reminder.repeatInterval,
     );
+  }
+
+  static RepeatInterval? _repeatFromString(String? value) {
+    if (value == null) return null;
+    return RepeatInterval.values
+        .firstWhere((interval) => interval.name == value, orElse: () => RepeatInterval.none);
   }
 }

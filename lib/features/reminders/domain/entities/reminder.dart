@@ -1,5 +1,22 @@
 import 'package:equatable/equatable.dart';
 
+enum RepeatInterval { none, daily, weekly, monthly }
+
+extension RepeatIntervalX on RepeatInterval {
+  String get label {
+    switch (this) {
+      case RepeatInterval.daily:
+        return 'Daily';
+      case RepeatInterval.weekly:
+        return 'Weekly';
+      case RepeatInterval.monthly:
+        return 'Monthly';
+      case RepeatInterval.none:
+        return 'None';
+    }
+  }
+}
+
 class Reminder extends Equatable {
   final String id;
   final String title;
@@ -8,6 +25,7 @@ class Reminder extends Equatable {
   final bool isCompleted;
   final bool sendEmail;
   final String? email;
+  final RepeatInterval repeatInterval;
 
   const Reminder({
     required this.id,
@@ -17,6 +35,7 @@ class Reminder extends Equatable {
     this.isCompleted = false,
     this.sendEmail = false,
     this.email,
+    this.repeatInterval = RepeatInterval.none,
   });
 
   Reminder copyWith({
@@ -27,6 +46,7 @@ class Reminder extends Equatable {
     bool? isCompleted,
     bool? sendEmail,
     String? email,
+    RepeatInterval? repeatInterval,
   }) {
     return Reminder(
       id: id ?? this.id,
@@ -36,6 +56,7 @@ class Reminder extends Equatable {
       isCompleted: isCompleted ?? this.isCompleted,
       sendEmail: sendEmail ?? this.sendEmail,
       email: email ?? this.email,
+      repeatInterval: repeatInterval ?? this.repeatInterval,
     );
   }
 
@@ -48,5 +69,6 @@ class Reminder extends Equatable {
         isCompleted,
         sendEmail,
         email,
+        repeatInterval,
       ];
 }

@@ -93,6 +93,23 @@ class ReminderCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
+                if (reminder.repeatInterval != RepeatInterval.none)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      'Repeats ${reminder.repeatInterval.label}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                const SizedBox(width: 8),
                 if (isPast)
                   Container(
                     padding:

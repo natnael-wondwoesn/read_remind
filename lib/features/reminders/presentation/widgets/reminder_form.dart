@@ -27,6 +27,7 @@ class _ReminderFormState extends State<ReminderForm> {
   final _formKey = GlobalKey<FormState>();
   late DateTime _scheduledAt;
   late bool _sendEmail;
+  late RepeatInterval _repeatInterval;
 
   @override
   void initState() {
@@ -36,8 +37,10 @@ class _ReminderFormState extends State<ReminderForm> {
     _descriptionController =
         TextEditingController(text: reminder?.description ?? '');
     _emailController = TextEditingController(text: reminder?.email ?? '');
-    _scheduledAt = reminder?.scheduledAt ?? DateTime.now().add(const Duration(hours: 1));
+    _scheduledAt =
+        reminder?.scheduledAt ?? DateTime.now().add(const Duration(hours: 1));
     _sendEmail = reminder?.sendEmail ?? false;
+    _repeatInterval = reminder?.repeatInterval ?? RepeatInterval.none;
   }
 
   @override
@@ -86,6 +89,7 @@ class _ReminderFormState extends State<ReminderForm> {
       sendEmail: _sendEmail,
       email: _sendEmail ? _emailController.text.trim() : null,
       isCompleted: widget.initialReminder?.isCompleted ?? false,
+      repeatInterval: _repeatInterval,
     );
     widget.onSubmit(reminder);
   }
@@ -157,6 +161,11 @@ class _ReminderFormState extends State<ReminderForm> {
             ),
           ),
           const SizedBox(height: 16),
+          _RepeatSelector(
+            value: _repeatInterval,
+            onChanged: (interval) => setState(() => _repeatInterval = interval),
+          ),
+          const SizedBox(height: 16),
           SwitchListTile.adaptive(
             value: _sendEmail,
             onChanged: (value) => setState(() => _sendEmail = value),
@@ -203,6 +212,49 @@ class _ReminderFormState extends State<ReminderForm> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _RepeatSelector extends StatelessWidget {
+  const _RepeatSelector({
+    required this.value,
+    required this.onChanged,
+  });
+
+  final RepeatInterval value;
+  final ValueChanged<RepeatInterval> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final options = RepeatInterval.values;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Repeat',
+          style: theme.textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: options.map((interval) {
+            final selected = interval == value;
+            final label =
+                interval == RepeatInterval.none ? 'No repeat' : interval.label;
+            return ChoiceChip(
+              label: Text(label),
+              selected: selected,
+              onSelected: (_) => onChanged(interval),
+              avatar: interval == RepeatInterval.none
+                  ? const Icon(Icons.block, size: 18)
+                  : const Icon(Icons.refresh, size: 18),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }

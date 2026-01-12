@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../features/reminders/presentation/bloc/reminder_bloc.dart';
 import '../features/reminders/presentation/bloc/reminder_event.dart';
-import '../features/reminders/presentation/pages/home_page.dart';
+import '../features/reminders/presentation/pages/startup_page.dart';
 import 'di/injection.dart';
 import 'utils/app_theme.dart';
 
@@ -22,7 +22,7 @@ class ReminderApp extends StatelessWidget {
         title: 'Read & Remind',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
-        home: const HomePage(),
+        home: const StartUpPage(),
       ),
     );
   }
