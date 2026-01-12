@@ -34,8 +34,8 @@ class AddEditReminderPage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              theme.colorScheme.primary.withOpacity(0.06),
-              theme.colorScheme.secondaryContainer.withOpacity(0.2),
+              theme.colorScheme.primary.withValues(alpha: 0.06),
+              theme.colorScheme.secondaryContainer.withValues(alpha: 0.2),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

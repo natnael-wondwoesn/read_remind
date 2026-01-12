@@ -28,7 +28,7 @@ class ReminderCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              theme.colorScheme.primary.withOpacity(0.9),
+              theme.colorScheme.primary.withValues(alpha: 0.9),
               theme.colorScheme.secondary,
             ],
             begin: Alignment.topLeft,
@@ -37,7 +37,7 @@ class ReminderCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.primary.withOpacity(0.2),
+              color: theme.colorScheme.primary.withValues(alpha: 0.2),
               blurRadius: 25,
               offset: const Offset(0, 15),
             ),
@@ -73,7 +73,7 @@ class ReminderCard extends StatelessWidget {
                 child: Text(
                   reminder.description!,
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.white.withOpacity(0.85),
+                    color: Colors.white.withValues(alpha: 0.85),
                   ),
                 ),
               ),
@@ -82,7 +82,7 @@ class ReminderCard extends StatelessWidget {
               children: [
                 Icon(
                   Icons.access_time_rounded,
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                   size: 20,
                 ),
                 const SizedBox(width: 8),
@@ -98,7 +98,7 @@ class ReminderCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.25),
+                      color: Colors.white.withValues(alpha: 0.25),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Text(

@@ -49,7 +49,6 @@ class _ReminderFormState extends State<ReminderForm> {
   }
 
   Future<void> _pickDateTime() async {
-    final context = this.context;
     final date = await showDatePicker(
       context: context,
       initialDate: _scheduledAt,
@@ -57,11 +56,13 @@ class _ReminderFormState extends State<ReminderForm> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (date == null) return;
+    if (!mounted) return;
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(_scheduledAt),
     );
     if (time == null) return;
+    if (!mounted) return;
     setState(() {
       _scheduledAt = DateTime(
         date.year,
